@@ -1,0 +1,7 @@
+add more stuff to db files such as determination of roles
+
+the certificates of the students needs to be shown to the safety_officer
+registering makes an incomplete profile student still needs to upload his qualifications to send
+rent requests to safety_officers
+
+how to determine the admin, safety_officer role, which user gets the authority to assign?

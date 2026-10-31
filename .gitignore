@@ -1,0 +1,70 @@
+# Python bytecode and local environments
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+ENV/
+.env
+.env.*
+!.env.example
+.flaskenv
+pip-wheel-metadata/
+
+# Packaging and build output
+build/
+dist/
+*.egg-info/
+.eggs/
+eggs/
+parts/
+sdist/
+wheels/
+
+# Local app state, databases, uploads, and sessions
+/instance/
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+flask_session/
+/app/static/uploads/
+/static/uploads/
+
+# Logs, test output, and analysis caches
+*.log
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+pytestdebug.log
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+
+# Local secrets and credentials
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+
+# Frontend package/build output if added later
+node_modules/
+npm-debug.log*
+yarn-debug.log*

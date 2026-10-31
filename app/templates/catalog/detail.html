@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ resource.name }}{% endblock %}{% block topbar_title %}Resource{% endblock %}
+{% block content %}<section class="page">
+<div class="gallery"><img src="{{ resource.display_image }}" alt="{{ resource.name }}"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="eyebrow">{{ resource.category.value }}</span><span class="badge {{ 'available' if resource.is_available else 'unavailable' }}">{{ 'Available' if resource.is_available else 'In use' }}</span></div>
+<h2 class="detail-title">{{ resource.name }}</h2><p class="muted" style="margin:0 0 12px">{{ resource.institution.name }} · {{ resource.location }}</p>
+<div style="font-size:24px;font-weight:800;color:var(--acc);margin-bottom:18px">{% if resource.hourly_price > 0 %}₹{{ '%.0f'|format(resource.hourly_price) }} <span style="font-size:12px;font-weight:500;color:var(--mu)">per hour</span>{% else %}<span style="font-size:16px">Contact facility for rates</span>{% endif %}</div>
+<h3>Specifications</h3><div class="specs"><div><span>Category</span>{{ resource.category.value }}</div><div><span>Slot length</span>Set by lab</div><div><span>Deposit</span>₹{{ '%.0f'|format(resource.deposit) }}</div><div><span>Operator</span>Contact lab</div></div>
+{% if resource.conditions %}<h3>Booking conditions</h3><div class="panel" style="font-size:13px">{{ resource.conditions }}</div>{% endif %}
+<h3>Access</h3><div class="panel"><div style="padding:8px 0;border-bottom:1px solid var(--ol)">Institution: {{ resource.institution.name }}</div><div style="padding:8px 0">Lab manager approval required</div></div>
+<div class="form-actions">{% if current_user.is_authenticated %}<a href="{{ url_for('bookings.new_booking',resource_id=resource.id) }}" class="btn btn-fill full">Request access</a>{% else %}<a href="{{ url_for('auth.login',next=url_for('bookings.new_booking',resource_id=resource.id)) }}" class="btn btn-fill full">Sign in to request access</a>{% endif %}</div>
+</section>{% endblock %}

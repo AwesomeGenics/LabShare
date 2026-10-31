@@ -1,0 +1,15 @@
+{% extends "register.html" %}
+
+{% block form %}
+<div align="center">
+    <form action="/regi_uni" method="post">
+        University Name: <br>
+        <input type="text" name="college" required> <br><br>
+
+        University Email: <br>
+        <input type="email" name="unimail" required><br><br>
+
+        <input type="submit" value="Send OTP">
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Activity ledger{% endblock %}
+{% block topbar_title %}Ledger{% endblock %}
+{% block content %}
+<section class="page">
+  <h2>Activity ledger</h2>
+  <p class="hint">
+    {{ logs|length }} event{{ "s" if logs|length != 1 else "" }}
+    {% if filter_resource_id or filter_action_type %}
+      · filtered <a class="link" href="{{ url_for('audit.ledger') }}">Clear</a>
+    {% endif %}
+  </p>
+
+  <form method="get" action="{{ url_for('audit.ledger') }}" class="panel">
+    <label class="field">
+      <span>Resource</span>
+      <select name="resource_id" onchange="this.form.submit()">
+        <option value="">All resources</option>
+        {% for r in all_resources %}
+          <option value="{{ r.id }}" {% if filter_resource_id == r.id %}selected{% endif %}>{{ r.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label class="field">
+      <span>Event</span>
+      <select name="action_type" onchange="this.form.submit()">
+        <option value="">All events</option>
+        {% for action_code, action_label in action_options %}
+          <option value="{{ action_code }}" {% if filter_action_type == action_code %}selected{% endif %}>{{ action_label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <p class="hint" style="margin:0">Filters update when selected.</p>
+  </form>
+
+  {% for log in logs %}
+    <article class="list-row">
+      <div style="display:flex;justify-content:space-between;gap:8px">
+        <b>{{ action_labels.get(log.action_type, log.action_type.replace('.', ' ').replace('_', ' ')|title) }}</b>
+        <span class="muted" style="font-size:11px">{{ log.created_at.strftime('%b %d · %H:%M') }}</span>
+      </div>
+      <p>
+        {{ log.actor.name if log.actor else 'System' }}
+        {% if log.resource %} · {{ log.resource.name }}{% endif %}
+      </p>
+      {% if log.previous_state or log.new_state %}
+        <span class="badge">{{ log.previous_state or 'Created' }} → {{ log.new_state or 'Updated' }}</span>
+      {% endif %}
+    </article>
+  {% else %}
+    <div class="empty">No activity recorded.</div>
+  {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "register.html" %}
+
+{% block form %}
+<div align="center">
+    <form action="/otp/uni" method="get">
+        
+        Name: <br>
+        <input type="text" required name="name"> <br><br>
+
+        Email: <br>
+        <input type="email" required name="email"><br><br>
+<!-- incomplete profile after login needs more detail post login like qualifications along with images/files-->
+        <input type="submit" value="Send OTP">
+    </form>
+</div>
+{% endblock %}

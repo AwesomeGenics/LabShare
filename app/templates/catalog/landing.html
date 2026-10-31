@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Explore{% endblock %}{% block topbar_title %}LabShare{% endblock %}
+{% block content %}<section class="page">
+<div class="hero"><h2>Share<br><i>every</i> lab,<br>unlock more.</h2><p>Find and book research equipment across campuses.</p><a class="btn btn-fill" href="{{ url_for('catalog.index') }}">Browse catalog <span class="icon">arrow_forward</span></a></div>
+<form class="search" action="{{ url_for('catalog.index') }}" method="get"><span class="icon">search</span><input name="q" placeholder="Search instruments or colleges" aria-label="Search instruments or colleges"><button class="icon" aria-label="Search">arrow_forward</button></form>
+<div class="category-shortcuts" aria-label="Popular categories">
+<a class="chip" href="{{ url_for('catalog.index',category='Labs') }}">Labs</a>
+<a class="chip" href="{{ url_for('catalog.index',category='Cleanrooms') }}">Cleanrooms</a>
+<a class="chip" href="{{ url_for('catalog.index',category='3D Printers') }}">3D printers</a>
+<a class="chip" href="{{ url_for('catalog.index',category='Analytical Instruments') }}">Instruments</a>
+</div>
+<div class="stats"><div><b>{{ resource_count|default(resources|length) }}</b><span>listings</span></div><div><b>{{ institutions|length }}</b><span>colleges</span></div><div><b>{{ available_count|default('—') }}</b><span>available</span></div></div>
+<h3>Featured equipment</h3>
+{% if resources %}<div class="grid">{% for resource in resources %}<a href="{{ url_for('catalog.detail',resource_id=resource.id) }}" class="resource-card"><img src="{{ resource.display_image }}" alt="{{ resource.name }}" loading="lazy"><div class="resource-body"><b>{{ resource.name }}</b><div class="resource-college">{{ resource.institution.name }} · {{ resource.location }}</div><span class="badge {{ 'available' if resource.is_available else 'unavailable' }}">{{ 'Available' if resource.is_available else 'In use' }}</span></div></a>{% endfor %}</div>{% else %}<div class="empty">No listings yet.</div>{% endif %}
+{% if not current_user.is_authenticated %}<h3>Share your facility</h3><a class="btn btn-line full" href="{{ url_for('auth.register') }}"><span class="icon">apartment</span>Register institution</a>{% elif current_user.role.value in ['owner','admin'] %}<h3>Manage a facility</h3><a class="btn btn-line full" href="{{ url_for('catalog.new_resource') }}">List a resource</a>{% endif %}
+</section>{% endblock %}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <div align="center">
+      <a href="/regi_uni"><button>Register as University</button></a>
+      <a href="/regi_stu"><button>Register as Student</button></a> <br><br>
+    {% block form %}
+      
+    {% endblock %}
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <p>{{ messages[0] }}</p>
+  {% endif %}
+{% endwith %}</div>
+</body>
+</html>

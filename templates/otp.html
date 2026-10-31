@@ -1,0 +1,12 @@
+{% extends "register.html" %}
+
+{% block form %}
+<div align="center">
+<form action="/otp" method="post">
+    Enter OTP: <br>
+    <input type="text" required inputmode="numeric" maxlength="4"> <br><br>
+
+    <input type="submit" value="Submit">
+</form>
+</div>
+{% endblock %}
